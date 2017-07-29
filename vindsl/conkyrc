@@ -1,0 +1,138 @@
+conky.config = {
+	own_window = true,
+	own_window_transparent = true,
+	own_window_type = 'normal',
+	background = false,
+	use_xft = true,
+	xftalpha = 0.5,
+	update_interval = 2.0,
+	total_run_times = 0,
+	double_buffer = true,
+	draw_shades = true,
+	draw_outline = true,
+	draw_borders = false,
+	draw_graph_borders = true,
+    minimum_height = 1394,
+	minimum_width = 240,
+    minimum_height = 690,
+    maximum_width = 240,
+	border_width = 0,
+	default_color = 'white',
+	default_shade_color = '#292421',
+	default_outline_color = '#292421',
+	font = 'DejaVu Sans Mono:size=9',
+	alignment = 'top_right',
+	gap_x = 6,
+	gap_y = 10,
+	no_buffers = true,
+	cpu_avg_samples = 2,
+	override_utf8_locale = true,
+	use_spacer = 'right',
+
+	text_buffer_size = 640,
+	imlib_cache_size = 0,
+	out_to_ncurses = false,
+	out_to_console = false,
+	short_units = true,
+	pad_percents = 0,
+	border_inner_margin = 4,
+	top_name_width = 10,
+	uppercase = false,
+
+	own_window_class = 'conky',
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+	color0 = 'White',--FFFFFF
+	color1 = 'Ivory',--FFFFF0
+	color2 = 'Ivory2',--EEEEE0
+	color0 = 'Ivory3',--CDCDC1
+	color4 = 'Tan1',--FFA54F
+	color5 = 'Tan2',--EE9A49
+	color6 = 'Gray',--7E7E7E
+	color7 = 'AntiqueWhite4',--8B8378
+	color8 = 'DimGray',--6969
+	color9 = 'Tomato',--FF6347
+
+--	lua_load = '~/Software/conky/vindsl/draw_bg.lua',
+--	lua_draw_hook_pre = 'draw_bg',
+
+	lua_load = '~/Software/conky/vindsl/bargraph_small.lua',
+	lua_draw_hook_post = 'main_bars',
+
+};
+
+conky.text = [[
+##################################
+##             LOGO             ##
+##################################
+####
+## Uncomment for soft-coded ID (dynamic)
+${voffset -25}${font OpenLogos:size=90}${color2}v${font}
+${voffset -80}${goto 170}${font UbuntuTitleBold:size=14}${color4}${execi 100 cat /etc/*release | grep 'RELEASE' | awk -F'=' '{print $2}'}${font}
+${voffset -1}${goto 192}${font Ubuntu:size=10}${color4}${font}
+##################################
+##            SYSTEM            ##
+##################################
+${voffset 7}${font DroidSans:bold:size=8}${color4}SYSTEM${offset 8}${color8}${voffset -2}${hr 2}${font}
+${voffset 4}${font OpenLogos:size=10}${color2}u${font}${voffset -4}${font DroidSans:size=8}${color2}${offset 5}${execi 1800 lsb_release -sd || cat /etc/*release}${font}
+${voffset 2}${font OpenLogos:size=12}${color2}Z${font}${voffset -4}${font Ubuntu:size=8}${color2}${offset 3}${sysname}${offset 3}${kernel}${alignr}${machine}${font}
+${voffset 2}${font StyleBats:size=10}${color2}d${font}${voffset -2}${font Ubuntu:size=8}${color2}${offset 5}${execi 1800 lspci | grep VGA | cut -d':' -f3 | cut -d'[' -f1}${alignr}${hwmon 1 temp 1}°C${font}
+${voffset 2}${font StyleBats:size=10}${color2}A${font}${voffset -1}${font Ubuntu:size=8}${color2}${offset 5}${execi 100 cat /proc/cpuinfo | grep 'model name' | uniq | cut -d' ' -f3-6}${alignr}${freq_g cpu0}${offset 1}GHz${font}
+${voffset 2}${font StyleBats:size=10}${color2}q${font}${voffset -1}${font Ubuntu:size=8}${color2}${offset 5}System${offset 3}Uptime${alignr}${uptime_short}${font}
+##################################
+##          PROCESSORS          ##
+##################################
+${voffset 4}${font DroidSans:bold:size=8}${color4}PROCESSORS${offset 8}${color8}${voffset -2}${hr 2}${font}
+${voffset 4}${font StyleBats:size=9}${color2}k${font}${voffset -2}${font Ubuntu:size=8}${offset 2}CPU1${offset 5}${cpu cpu1}%${font}
+${voffset 2}${font StyleBats:size=9}${color2}k${font}${voffset -2}${font Ubuntu:size=8}${offset 2}CPU2${offset 5}${cpu cpu2}%${font}
+${voffset 2}${font StyleBats:size=9}${color2}k${font}${voffset -2}${font Ubuntu:size=8}${offset 2}CPU3${offset 5}${cpu cpu3}%${font}
+${voffset 2}${font StyleBats:size=9}${color2}k${font}${voffset -2}${font Ubuntu:size=8}${offset 2}CPU4${offset 5}${cpu cpu4}%${font}
+##################################
+##            MEMORY            ##
+##################################
+${voffset 5}${font DroidSans:bold:size=8}${color4}MEMORY${offset 8}${color8}${voffset -2}${hr 2}${font}
+${voffset 4}${font StyleBats:size=10}${color2}l${voffset -2}${font Ubuntu:size=8}${offset 3}RAM${goto 97}${mem}${goto 133}/${offset 5}${memmax}${alignr}${memperc}%${font}
+##################################
+##             HDD              ##
+##################################
+${voffset 15}${font DroidSans:bold:size=8}${color4}HDD${offset 8}${color8}${voffset -2}${hr 2}${font}
+${voffset 6}${font StyleBats:size=9}${color2}x${voffset -2}${font Ubuntu:size=8}${offset 4}ROOT${goto 95}${fs_used /}${goto 133}/${offset 5}${fs_size /}${alignr}${fs_used_perc /}%${font}
+${voffset 15}${font StyleBats:size=9}${color2}x${voffset -2}${font Ubuntu:size=8}${offset 4}HOME${goto 95}${fs_used /home}${goto 133}/${offset 5}${fs_size /home}${alignr}${fs_used_perc /home}%${font}
+${voffset 15}${font StyleBats:size=9}${color2}4${voffset -2}${font Ubuntu:size=8}${offset 4}SWAP${goto 95}${swap}${goto 133}/${offset 5}${swapmax}${alignr}${swapperc}%${font}
+##################################
+##         TOP PROCESSES        ##
+##################################
+${voffset 15}${font DroidSans:bold:size=8}${color4}TOP PROCESSES${offset 8}${color8}${voffset -2}${hr 2}${font}
+${voffset 6}${font StyleBats:size=10}${color2}h${voffset -1}${font Ubuntu:size=8}${offset 5}${top_mem name 1}${goto 120}${top_mem mem_res 1}${alignr}${top_mem mem 1}%${font}
+${voffset 1}${font StyleBats:size=10}${color2}h${voffset -1}${font Ubuntu:size=8}${offset 5}${top_mem name 2}${goto 120}${top_mem mem_res 2}${alignr}${top_mem mem 2}%${font}
+${voffset 1}${font StyleBats:size=10}${color2}h${voffset -1}${font Ubuntu:size=8}${offset 5}${top_mem name 3}${goto 120}${top_mem mem_res 3}${alignr}${top_mem mem 3}%${font}
+##################################
+##           NETWORK            ##
+##################################
+${voffset 4}${font DroidSans:bold:size=8}${color4}NETWORK${offset 8}${color8}${voffset -2}${hr 2}${font}
+${voffset 4}${font PizzaDudeBullets:size=9}${color6}T${font DroidSans:size=8}${color0}${offset 5}Download${goto 120}${totaldown wlp3s0}${alignr}${downspeed wlp3s0}${font}
+${voffset 0}${font PizzaDudeBullets:size=9}${color6}N${font DroidSans:size=8}${color0}${offset 5}Upload${goto 120}${totalup wlp3s0}${alignr}${upspeed wlp3s0}${font}
+${voffset 0}${font PizzaDudeBullets:size=9}${color6}a${font DroidSans:size=8}${color0}${offset 5}Private${offset 3}IP${goto 120}WiFi${alignr}${addr wlp3s0}${font}
+${voffset 0}${font PizzaDudeBullets:size=9}${color6}a${font DroidSans:size=8}${color0}${offset 5}Public${offset 7}IP${goto 120}WAN${alignr}${execi 1800 wget -q -O - checkip.dyndns.org | sed -e 's/[^[:digit:]\|.]//g'}${font}
+##################################
+##     WEATHER                  ##
+##################################
+${voffset 4}${font DroidSans:bold:size=8}${color4}WEATHER${offset 8}${color8}${voffset -2}${hr 2}${font}
+${voffset 4}${font Ubuntu:size=8}${color5}${execpi 1800 ruby ~/Software/conky/vindsl/weather/bbc-weather.rb 2867714}${font}
+##################################
+##             TIME             ##
+##################################
+${voffset 4}${font DroidSans:bold:size=8}${color4}TIME${offset 8}${color8}${voffset -2}${hr 2}${font}
+${voffset -4}${font RadioSpace:size=32}${color0}${alignc}${time %H:%M}${font}
+##################################
+##      CALENDAR (5-Line)       ##
+##################################
+${voffset 4}${font DroidSans:bold:size=8}${color4}DATE${offset 8}${color8}${voffset -2}${hr 2}${font}
+${voffset 18}${font Ubuntu:size=8}${color0}${alignc 60}${time %A}${font}
+${voffset -4}${font DroidSansFallback:bold:size=18}${if_match ${time %e}<=9}${color5}${alignc 65}${time %e}${font}${else}${if_match ${time %e}>=10}${color5}${alignc 60}${time %e}${endif}${endif}${font}
+${voffset 0}${font Ubuntu:size=8}${color0}${alignc 60}${time %B}${font}
+${voffset 0}${font Ubuntu:size=8}${color2}${alignc 60}${time %Y}${font}
+${voffset -84}${font CutOutsFor3DFX:size=67}${color8}${alignc 99}2${font}
+${voffset -64}${font UbuntuMono:size=8}${color2}${execpi 60 VinDSL_Cal_9=`date +%d | sed 's/^0*//'`; ncal -Mbh | sed -e 's/\r//g' -e 's/^/ /g' -e '1d' -e s/^/"\$\{offset 100"\}/ -e 's/\<'"$VinDSL_Cal_9"'\>/${color4}&${color0}/'}
+
+]];
